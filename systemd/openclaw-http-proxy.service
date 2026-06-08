@@ -1,0 +1,24 @@
+[Unit]
+Description=OpenClaw HTTP Proxy
+After=network.target
+
+[Service]
+Type=simple
+User=openclaw-proxy
+Group=openclaw-proxy
+WorkingDirectory=/opt/openclaw-http-proxy
+EnvironmentFile=/opt/openclaw-http-proxy/.env
+ExecStart=/usr/bin/node dist/index.js
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=65535
+
+# Hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/openclaw-http-proxy
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
